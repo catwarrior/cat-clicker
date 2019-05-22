@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <style>
+      #cat-detail {
+          margin: 50px 0;
+          color: blue
+      }
+      #clickCount {
+          display: block;
+      }
+    </style>
+    <div id="cat-list"></div>
+    <div id="cat-detail"></div>
+    <script>
+        var cats = [
+            {
+                name: "Jobs Great",
+                picture: "images/jobs.png",
+                clickCount: 0
+            },
+            {
+                name: "Lipo Minus",
+                picture: "images/lipo.png",
+                clickCount: 0
+            },
+            {
+                name: "Lala",
+                picture: "images/lala.png",
+                clickCount: 0
+            },
+        ]
+
+        var catList = document.getElementById('cat-list')
+        var catDetail = document.getElementById('cat-detail')
+        for (const c of cats) {
+            // create list
+            let div = document.createElement('div')
+            div.innerText = c.name
+
+            // click cat in list
+            div.addEventListener('click', showCat(c))
+
+
+            catList.appendChild(div)
+        }
+
+        showCat(cats[0])()
+
+
+        function showCat(c) {
+            return function () {
+                catDetail.innerText = ''
+                // create cat
+                // create cat name
+                let divCatName = document.createElement('div')
+                divCatName.innerText = c.name
+                catDetail.appendChild(divCatName)
+
+                // create cat click number
+                showCatClickNumber(c)
+
+                // create cat image
+                let divCatImage = document.createElement('img')
+                divCatImage.src = c.picture
+                divCatImage.addEventListener('click', (function (c) {
+                    return function () {
+                        c.clickCount+=1
+                        showCatClickNumber(c)
+                    }
+                })(c));
+                catDetail.appendChild(divCatImage)
+            }
+        }
+
+        function showCatClickNumber(c) {
+            const id = "clickCount"
+            let el = document.getElementById(id);
+            if(!el) {
+                el = document.createElement('div')
+                el.id = id;
+                el.innerText = c.clickCount;
+                catDetail.appendChild(el)
+            }
+            el.innerText = c.clickCount;
+        }
+        
+    </script>
+</body>
+</html>
